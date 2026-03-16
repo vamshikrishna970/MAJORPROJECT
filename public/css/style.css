@@ -1,7 +1,8 @@
-/* body{
+body{
 
-    background-color: rgb(133, 17, 37);
-} */
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  
+}
 
 /* Navbar */
 .navbar{
@@ -45,4 +46,67 @@ text-decoration: underline;
     justify-content: center;
     flex-wrap:wrap ;
     align-items: space-evenly;
+}
+
+/*cards*/
+
+.card{
+    border: none !important;
+    margin-bottom: 2rem;
+    width:18rem;
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-weight: 400 !important;
+}
+
+/* Ensure all listing images have the same height and fill the space */
+.listing-card img {
+  height: 20rem !important;
+  width: 100%;
+  object-fit: cover !important;
+  border-radius: 1rem !important;
+}
+
+/* Remove card border for a cleaner look */
+.listing-card {
+  border: none !important;
+  margin-bottom: 2rem;
+}
+
+/* Hover effect */
+.listing-card:hover {
+  opacity: 0.85;
+}
+
+/* Reset link style */
+.listing-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Custom styling for inputs to match the design */
+.form-control {
+    border-radius: 8px !important;
+    border: 1px solid #ced4da;
+    padding: 10px;
+}
+
+.add-btn {
+    background-color: #222222 !important;
+    border: none !important;
+    padding: 8px 24px !important;
+}
+
+h3 {
+    font-weight: 500;
 }

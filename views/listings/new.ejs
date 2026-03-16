@@ -6,32 +6,47 @@
     <title>WanderLust</title>
   </head>
   <body>
-    <h3>Create a New Listing</h3>
-    <form method="POST" action="/listings">
-      <input name="listing[title]" placeholder="enter title" type="text" />
-      <br /><br />
-      <textarea
-        name="listing[description]"
-        placeholder="enter description"
-      ></textarea>
-      <br /><br />
-      <input
-        name="listing[image]"
-        placeholder="enter image URL/Link"
-        type="text"
-      />
-      <br /><br />
-      <input name="listing[price]" placeholder="enter price" type="number" />
-      <br /><br />
-      <input name="listing[country]" placeholder="enter country" type="text" />
-      <br /><br />
-      <input
-        name="listing[location]"
-        placeholder="enter location"
-        type="text"
-      />
-      <br /><br />
-      <button>Add</button>
-    </form>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <h2 class="mb-4">Create a New Listing</h2>
+          <form method="POST" action="/listings">
+            
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input name="listing[title]" placeholder="enter title" type="text" class="form-control">
+            </div>
+    
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea name="listing[description]" class="form-control" rows="4"></textarea>
+            </div>
+    
+            <div class="mb-3">
+              <label class="form-label">Image Link</label>
+              <input name="listing[image]" placeholder="enter image URL/Link" type="text" class="form-control">
+            </div>
+    
+            <div class="mb-3">
+              <label class="form-label">Price</label>
+              <input name="listing[price]" placeholder="enter price" type="number" class="form-control">
+            </div>
+    
+            <div class="mb-3">
+              <label class="form-label">Country</label>
+              <input name="listing[country]" placeholder="enter country" type="text" class="form-control">
+            </div>
+    
+            <!-- Inline Location Field -->
+            <div class="mb-3 d-flex align-items-center gap-2">
+              <label class="form-label mb-0">Location</label>
+              <input name="listing[location]" placeholder="enter location" type="text" class="form-control" style="width: auto;">
+            </div>
+    
+            <button class="btn btn-dark mt-3">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
