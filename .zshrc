@@ -1,0 +1,1 @@
+export PATH= /Users/vamshikrishna/mongodb-macos-aarch64--8.3.0-rc5/bin

@@ -1,3 +1,7 @@
+.html{
+    height: 100%;
+}
+
 body{
 
   font-family: "Plus Jakarta Sans", sans-serif !important;
@@ -16,6 +20,7 @@ body{
 .container{
     flex: 1;
 }
+
 
 /* Navbar */
 .navbar{
@@ -115,7 +120,13 @@ text-decoration: underline;
 }
 
 .add-btn {
-    background-color: #222222 !important;
+    background-color: #fe424d !important;
+    border: none !important;
+    padding: 8px 24px !important;
+}
+
+.edit-btn {
+    background-color: #fe424d !important;
     border: none !important;
     padding: 8px 24px !important;
 }
@@ -123,3 +134,24 @@ text-decoration: underline;
 h3 {
     font-weight: 500;
 }
+/* show page */
+.show-img{
+    width: 70vh !important;
+    height: 30vh !important;
+    
+}
+.btns{
+    display: flex;
+    gap: 1rem;
+    margin-left: 16.6667% !important;
+    margin-bottom: 2rem;
+} 
+.btns .btn-dark {
+    background-color: #222222 !important;
+    border-color: #222222 !important;
+    padding: 0.5rem 1.5rem !important;
+}
+.btns form {
+    margin: 0;
+}
+
