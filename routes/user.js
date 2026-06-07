@@ -9,7 +9,7 @@ router.get("/signup", (req, res) => {
     res.render("users/signup");
 });
 
-router.post("/signup", wrapAsync(async (req, res, next) => {
+router.post("/user/signup", wrapAsync(async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
@@ -24,5 +24,28 @@ router.post("/signup", wrapAsync(async (req, res, next) => {
         res.redirect("/user/signup");
     }
 }));
+
+router.get("/login", (req, res) => {
+    res.render("users/login.ejs");
+});
+
+router.post(
+    "/login",
+    passport.authenticate("local", {
+        failureFlash: true,
+        failureRedirect: "/user/login",
+    }),
+    (req, res) => {
+        req.flash("success", "Welcome back!");
+        res.redirect("/listings");
+    }
+);
+
+router.get("/logout", (req, res) => {
+    req.logout(() => {
+        req.flash("success", "You have logged out successfully.");
+        res.redirect("/user/login");
+    });
+});
 
 module.exports = router;
