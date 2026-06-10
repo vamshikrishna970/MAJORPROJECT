@@ -9,7 +9,7 @@ router.get("/signup", (req, res) => {
     res.render("users/signup");
 });
 
-router.post("/user/signup", wrapAsync(async (req, res, next) => {
+router.post("/signup", wrapAsync(async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
@@ -41,11 +41,18 @@ router.post(
     }
 );
 
+
 router.get("/logout", (req, res) => {
-    req.logout(() => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
         req.flash("success", "You have logged out successfully.");
-        res.redirect("/user/login");
+        res.redirect("/listings");
+
     });
 });
+
+
 
 module.exports = router;

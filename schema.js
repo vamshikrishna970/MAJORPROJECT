@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const { count } = require('node:console');
 
 module.exports.listingSchema = Joi.object({
   listing: Joi.object({
