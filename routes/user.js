@@ -4,6 +4,7 @@ const User = require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const passport = require("passport");
+const { saveRedirectUrl } = require("../middlieware.js");
 
 router.get("/signup", (req, res) => {
     res.render("users/signup");
@@ -31,13 +32,14 @@ router.get("/login", (req, res) => {
 
 router.post(
     "/login",
+    saveRedirectUrl,
     passport.authenticate("local", {
         failureFlash: true,
         failureRedirect: "/user/login",
     }),
     (req, res) => {
         req.flash("success", "Welcome back!");
-        res.redirect("/listings");
+        res.redirect(res.locals.redirectUrl || "/listings");
     }
 );
 
