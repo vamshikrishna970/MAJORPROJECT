@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
+const util = require('util');
+if (Array.isArray(util)) { 
+  // This will check if the variable is an array
+}
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
@@ -27,8 +31,21 @@ async function main() {
 main()
   .then(() => {
     console.log("Connected to MongoDB");
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}`);
+    });
+    
+    // Handle port already in use error
+    server.on("error", (err) => {
+      if (err.code === "EADDRINUSE") {
+        console.error(`\n❌ Port ${PORT} is already in use.`);
+        console.error("Please either:");
+        console.error(`   1. Kill the process using port ${PORT}: lsof -i :${PORT} | grep LISTEN | awk '{print $2}' | xargs kill -9`);
+        console.error(`   2. Or set a different PORT: PORT=3000 node app.js`);
+        process.exit(1);
+      } else {
+        throw err;
+      }
     });
   })
   .catch((err) => {
