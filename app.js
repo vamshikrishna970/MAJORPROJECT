@@ -2,10 +2,6 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-const util = require('util');
-if (Array.isArray(util)) { 
-  // This will check if the variable is an array
-}
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
