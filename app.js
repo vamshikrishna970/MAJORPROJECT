@@ -61,6 +61,10 @@ if (process.env.NODE_ENV === "production") app.set("trust proxy", 1);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  "/vendor/starability",
+  express.static(path.join(__dirname, "node_modules", "starability", "starability-minified"))
+);
 
 
 const sessionSecret = process.env.SECRET || "development-only-secret";
