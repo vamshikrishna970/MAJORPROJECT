@@ -24,7 +24,7 @@
 
 
    
-<% if (currUser && currUser._id == listing.owner._id.equals(currUser._id)) { %>
+<% if (currentUser && listing.owner && listing.owner._id.equals(currentUser._id)) { %>
      <div class="btns col-6 offset-3 mb-3" style="display: flex; gap: 1rem;">
     <a 
     href="/listings/<%= listing._id %>/edit" 
@@ -43,7 +43,7 @@
         <% }%> 
        <div class="col-6 offset-3 mb-3">
         <hr/>
-        <% if(currUser) { %>
+        <% if(currentUser) { %>
 
         <h4> Leave a Review </h4>
         <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
@@ -65,63 +65,26 @@
         <hr/>
         <p><b>All Reviews</b></p>
         <div class="row row-cols-1 row-cols-md-2 g-4">
-          <% if (listing.reviews && listing.reviews.length > 0) { %>
-            <% for (let review of listing.reviews) { %>
+          <% for (let review of listing.reviews) { %>
               <div class="col">
                 <div class="card h-100">
                   <div class="card-body">
-                    <h5 class="card-title">Jane Doe</h5>
+                    <h5 class="card-title">
+                      @<%= review.author ? review.author.username : "unknown" %>
+                    </h5>
                     <p class="card-text"><%= review.comment %></p>
                     <p class="card-text"><%= review.rating %> stars</p>
                   </div>
-                  <form class="mb-3" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">  
+                  <% if (currentUser && review.author && review.author._id.equals(currentUser._id)) { %>
+                  <form class="mb-3" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
                     <button class="btn btn-sm btn-dark">Delete</button>
                   </form>
+                  <% } %>
                 </div>
               </div>
-            <% } %>
-          <% } else { %>
-            <!-- Demo reviews for testing -->
-            <div class="col">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Jane Doe</h5>
-                  <p class="card-text">Excellent experience, must visit for all!</p>
-                  <p class="card-text"><strong>Rating:</strong> 5/5</p>
-                </div>
-                <form class="mb-3" method="post" action="/listings/<%= listing._id %>/reviews/demo1?_method=DELETE">  
-                  <button class="btn btn-sm btn-dark">Delete</button>
-                </form>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Jane Doe</h5>
-                  <p class="card-text">very poor staff, not good at all</p>
-                  <p class="card-text"><strong>Rating:</strong> 1/5</p>
-                </div>
-                <form class="mb-3" method="post" action="/listings/<%= listing._id %>/reviews/demo2?_method=DELETE">  
-                  <button class="btn btn-sm btn-dark">Delete</button>
-                </form>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Jane Doe</h5>
-                  <p class="card-text">Great place for a vacation!</p>
-                  <p class="card-text"><strong>Rating:</strong> 4/5</p>
-                </div>
-                <form class="mb-3" method="post" action="/listings/<%= listing._id %>/reviews/demo3?_method=DELETE">  
-                  <button class="btn btn-sm btn-dark">Delete</button>
-                </form>
-              </div>
-            </div>
           <% } %>
         </div>
        </div>
 
   </div>
 </div>
- 

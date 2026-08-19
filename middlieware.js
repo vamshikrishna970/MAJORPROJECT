@@ -1,4 +1,5 @@
 const Listing = require("./models/listing");
+const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema,reviewSchema } = require("./schema.js");
 
@@ -37,24 +38,37 @@ module.exports.isOwner = async (req, res, next) => {
   next();
 };
 
-module.exports.validatereview = (req, res, next) => {
-    let { error } = reviewSchema.validate(req.body);
-  
-    if (error) {
-      let errMsg = error.details.map((el) => el.message).join(",");
-      throw new ExpressError(400, errMsg);
-    } else {
-      next();
-    }
-  };
-  
-  module.exports.validatereview = (req, res, next) => {
-    let { error } = reviewSchema.validate(req.body);
-  
-    if (error) {
-      let errMsg = error.details.map((el) => el.message).join(",");
-      throw new ExpressError(400, errMsg);
-    } else {
-      next();
-    }
-  };
+module.exports.isReviewAuthor = async (req, res, next) => {
+  const { id, reviewId } = req.params;
+  const review = await Review.findById(reviewId);
+
+  if (!review) {
+    req.flash("error", "Review you requested does not exist");
+    return res.redirect(`/listings/${id}`);
+  }
+
+  if (!review.author || !review.author.equals(req.user._id)) {
+    req.flash("error", "You are not the author of this review!");
+    return res.redirect(`/listings/${id}`);
+  }
+
+  next();
+};
+
+module.exports.validateListing = (req, res, next) => {
+  const { error } = listingSchema.validate(req.body);
+  if (error) {
+    const errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  }
+  next();
+};
+
+module.exports.validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+  if (error) {
+    const errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  }
+  next();
+};
