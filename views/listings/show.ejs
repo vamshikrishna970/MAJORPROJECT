@@ -24,7 +24,7 @@
 
 
    
-
+<% if (currUser && currUser._id == listing.owner._id.equals(currUser._id)) { %>
      <div class="btns col-6 offset-3 mb-3" style="display: flex; gap: 1rem;">
     <a 
     href="/listings/<%= listing._id %>/edit" 
@@ -35,9 +35,15 @@
         <button class="btn btn-dark">Delete</button>
        </form>
    </div>
-   
+
+
+
+
+
+        <% }%> 
        <div class="col-6 offset-3 mb-3">
         <hr/>
+        <% if(currUser) { %>
 
         <h4> Leave a Review </h4>
         <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
@@ -54,6 +60,7 @@
            </div>
             <button class="btn btn-primary mt-2">Submit Review</button>
         </form>
+        <% } %>
 
         <hr/>
         <p><b>All Reviews</b></p>
