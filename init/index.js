@@ -1,23 +1,35 @@
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
+const Review = require("../models/review.js");
+const User = require("../models/user.js");
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/wanderlust";
 
 async function initDB() {
   await mongoose.connect(MONGO_URL);
 
-  // Convert any image objects to a string URL so they match the Listing schema.
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("Refusing to replace production data with development seed data");
+  }
+
+  const username = process.env.SEED_USERNAME || "wanderlust-demo";
+  const password = process.env.SEED_PASSWORD || "demo-password";
+  let owner = await User.findOne({ username });
+  if (!owner) {
+    owner = await User.register(
+      new User({ username, email: `${username}@example.com` }),
+      password
+    );
+  }
+
   const listings = initData.data.map((listing) => ({
     ...listing,
-    image:
-      listing.image && typeof listing.image === "object"
-        ? listing.image.url
-        : listing.image,
+    owner: owner._id,
   }));
 
   await Listing.deleteMany({});
-  initData.data = initData.data.map((obj)=> ({...obj, owner: "64a1c8e5b9d2f0a5c8e4b123"}));
+  await Review.deleteMany({});
   await Listing.insertMany(listings);
 
   console.log("data was initialized");

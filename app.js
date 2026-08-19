@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -10,6 +14,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const MongoStore = require("connect-mongo").default;
 
 
 
@@ -52,19 +57,32 @@ main()
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+if (process.env.NODE_ENV === "production") app.set("trust proxy", 1);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
 
+const sessionSecret = process.env.SECRET || "development-only-secret";
+const store = MongoStore.create({
+  mongoUrl: MONGO_URL,
+  crypto: { secret: sessionSecret },
+  touchAfter: 24 * 60 * 60,
+});
+
+store.on("error", (err) => console.error("Mongo session store error:", err));
+
 const sessionoptions = {
-  secret: "mysupersecret",
+  store,
+  secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
   },
 };
 
@@ -92,19 +110,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/demoUser", async (req, res) => {
-  let fakeUser = new User({
-    email: "student@gmail.com",
-    username: "student"
-  });
-  let registeredUser = await User.register(fakeUser, "helloworld");
-  res.send(registeredUser);
-});
-
-
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-app.use("/user", userRouter);
+app.use("/", userRouter);
 
  
 
@@ -117,5 +125,4 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error.ejs", { message });
 });
 
-
-
+module.exports = app;

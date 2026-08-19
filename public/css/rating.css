@@ -1,0 +1,49 @@
+.starability-slot {
+  border: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 0.15rem;
+  padding: 0;
+}
+
+.starability-slot input {
+  position: absolute;
+  opacity: 0;
+}
+
+.starability-slot label {
+  color: #d7d7d7;
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 2rem;
+}
+
+.starability-slot label::before {
+  content: "★";
+  display: block;
+  text-indent: 0;
+}
+
+.starability-slot input:checked ~ label,
+.starability-slot input:focus-visible + label,
+.starability-slot label:hover,
+.starability-slot label:hover ~ label {
+  color: #fe424d;
+}
+
+.starability-result::before {
+  color: #fe424d;
+  content: "★★★★★";
+  display: block;
+  letter-spacing: 0.12rem;
+}
+
+.starability-result[data-rating="1"]::before { content: "★☆☆☆☆"; }
+.starability-result[data-rating="2"]::before { content: "★★☆☆☆"; }
+.starability-result[data-rating="3"]::before { content: "★★★☆☆"; }
+.starability-result[data-rating="4"]::before { content: "★★★★☆"; }
+.starability-result[data-rating="5"]::before { content: "★★★★★"; }

@@ -152,3 +152,66 @@ h3 {
     margin: 0;
 }
 
+.edit-image-preview {
+  border-radius: 0.75rem;
+  height: 180px;
+  object-fit: cover;
+  width: min(100%, 320px);
+}
+
+#filters {
+  align-items: center;
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+}
+
+.filter {
+  flex: 0 0 auto;
+  opacity: 0.7;
+  text-align: center;
+}
+
+.filter:hover { opacity: 1; }
+.filter p { font-size: 0.8rem; }
+
+.tax-toggle {
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  display: flex;
+  flex: 0 0 auto;
+  height: 3.25rem;
+  padding: 0.75rem 1rem;
+}
+
+.tax-info { display: none; font-style: normal; }
+.tax-info.show-tax { display: inline; }
+
+.search-btn {
+  background-color: #fe424d !important;
+  border-radius: 2rem !important;
+  color: white !important;
+  white-space: nowrap;
+}
+
+.search-input { border-radius: 2rem !important; }
+
+#map {
+  border-radius: 1rem;
+  height: 400px;
+  width: 100%;
+}
+
+.map-placeholder,
+.empty-state {
+  align-items: center;
+  background: #f7f7f7;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 220px;
+  padding: 2rem;
+  text-align: center;
+}

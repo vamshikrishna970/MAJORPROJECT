@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer components {
+  .course-card {
+    @apply max-w-sm overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-cyan-950/50 transition hover:-translate-y-2;
+  }
+
+  .lesson-pill {
+    @apply rounded-full bg-black/25 px-3 py-1 text-sm backdrop-blur;
+  }
+
+  .cta-button {
+    @apply w-full rounded-xl bg-cyan-300 px-5 py-3 font-extrabold text-slate-950 transition hover:bg-white focus:outline-none focus:ring-4 focus:ring-cyan-300/30 sm:w-auto;
+  }
+}
